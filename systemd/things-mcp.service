@@ -1,0 +1,23 @@
+[Unit]
+Description=Things Cloud MCP server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/things-mcp
+EnvironmentFile=/opt/things-mcp/.env
+Environment=THINGS_MCP_DB_PATH=/opt/things-mcp/entities.sqlite
+ExecStart=/opt/things-mcp/.venv/bin/things-mcp serve --host 127.0.0.1 --port 8765
+Restart=on-failure
+RestartSec=5
+User=things-mcp
+Group=things-mcp
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/things-mcp
+
+[Install]
+WantedBy=multi-user.target
